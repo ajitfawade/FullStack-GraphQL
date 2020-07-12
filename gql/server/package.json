@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.0.12",
+    "@graphql-tools/merge": "^6.0.12",
+    "apollo-server": "^2.15.1",
+    "apollo-server-express": "^2.15.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
+    "mongoose": "^5.9.23",
+    "nodemon": "^2.0.4"
+  }
+}
