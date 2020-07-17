@@ -5,6 +5,7 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const { mergeTypeDefs, mergeResolvers } = require("@graphql-tools/merge");
 const { loadFilesSync } = require("@graphql-tools/load-files");
+const { authCheck } = require("./helpers/auth");
 
 const http = require("http");
 
@@ -43,6 +44,7 @@ const resolvers = mergeResolvers(
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req, res }) => ({ req, res }),
 });
 
 // applyMiddleware method connects apollo server to specific http framework ie:express
@@ -56,7 +58,7 @@ apolloServer.applyMiddleware({
 const httpServer = http.createServer(app);
 
 // rest endpoint
-app.get("/rest", (req, res) => {
+app.get("/rest", authCheck, (req, res) => {
   res.json({ data: "you hit rest endpoint" });
 });
 
