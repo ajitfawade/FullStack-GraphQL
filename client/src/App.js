@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Nav from "./components/Nav";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import CompleteRegistration from "./components/Auth/CompleteRegistration";
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
@@ -23,6 +24,11 @@ const App = () => {
         <Route path="/" exact component={Home} />
         <Route path="/register" exact component={Register} />
         <Route path="/login" exact component={Login} />
+        <Route
+          path="/complete-registration"
+          exact
+          component={CompleteRegistration}
+        />
       </Switch>
     </ApolloProvider>
   );
