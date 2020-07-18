@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 import { auth, googleAuthProvider } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
+import AuthForm from "../../components/forms/AuthForm";
 
 const USER_CREATE = gql`
   mutation userCreate {
@@ -73,37 +74,15 @@ const Login = () => {
       <button onClick={googleLogin} className="btn btn-raised btn-danger mt-5">
         Login with Google
       </button>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email Address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={email}
-            disabled={loading}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={password}
-            disabled={loading}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button
-          className="btn btn-raised btn-primary"
-          disabled={!email || !password || loading}
-          type="submit"
-        >
-          Submit
-        </button>
-      </form>
+      <AuthForm
+        email={email}
+        password={password}
+        loading={loading}
+        setEmail={setEmail}
+        setPassword={setPassword}
+        showPasswordInput={true}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

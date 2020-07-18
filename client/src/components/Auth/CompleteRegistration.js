@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 
 import { auth } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
+import AuthForm from "../../components/forms/AuthForm";
 
 const USER_CREATE = gql`
   mutation userCreate {
@@ -82,37 +83,15 @@ const CompleteRegistration = () => {
       ) : (
         <h4>Complete Registration</h4>
       )}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email Address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={email}
-            disabled
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter Password"
-            value={password}
-            disabled={loading}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button
-          className="btn btn-raised btn-primary"
-          disabled={loading || !email}
-          type="submit"
-        >
-          Submit
-        </button>
-      </form>
+      <AuthForm
+        email={email}
+        password={password}
+        loading={loading}
+        setEmail={setEmail}
+        setPassword={setPassword}
+        showPasswordInput={true}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };
