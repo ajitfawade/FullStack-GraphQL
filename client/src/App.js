@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ApolloClient from "apollo-boost";
 import { Switch, Route } from "react-router-dom";
 
@@ -10,12 +10,23 @@ import Nav from "./components/Nav";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import CompleteRegistration from "./components/Auth/CompleteRegistration";
-
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
-});
+import { AuthContext } from "./context/authContext";
 
 const App = () => {
+  const { state } = useContext(AuthContext);
+  const { user } = state;
+
+  const client = new ApolloClient({
+    uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+    request: (operation) => {
+      operation.setContext({
+        headers: {
+          authtoken: user ? user.token : "",
+        },
+      });
+    },
+  });
+
   return (
     <ApolloProvider client={client}>
       <Nav />
