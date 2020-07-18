@@ -19,6 +19,7 @@
     "firebase-admin": "^9.0.0",
     "graphql": "^15.3.0",
     "mongoose": "^5.9.23",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "shortid": "^2.2.15"
   }
 }

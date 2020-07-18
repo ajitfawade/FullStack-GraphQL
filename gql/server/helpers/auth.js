@@ -10,7 +10,7 @@ admin.initializeApp({
 exports.authCheck = async (req) => {
   try {
     const currentUser = await admin.auth().verifyIdToken(req.headers.authtoken);
-    console.log("CURRENT USER", currentUser);
+    return currentUser;
   } catch (error) {
     console.error("Authcheck Error", error);
     throw new Error("INVALID OR EXPIRED TOKEN", error);
