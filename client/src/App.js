@@ -7,10 +7,14 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
-import CompleteRegistration from "./components/Auth/CompleteRegistration";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import CompleteRegistration from "./pages/Auth/CompleteRegistration";
 import { AuthContext } from "./context/authContext";
+import PrivateRoute from "./components/PrivateRoute";
+import ResetPassword from "./pages/Auth/ResetPassword";
+import Profile from "./pages/Auth/Profile";
+import Post from "./pages/Post/Post";
 
 const App = () => {
   const { state } = useContext(AuthContext);
@@ -40,6 +44,9 @@ const App = () => {
           exact
           component={CompleteRegistration}
         />
+        <PrivateRoute path="/password/update" exact component={ResetPassword} />
+        <PrivateRoute path="/profile" exact component={Profile} />
+        <PrivateRoute path="/post/create" exact component={Post} />
       </Switch>
     </ApolloProvider>
   );
