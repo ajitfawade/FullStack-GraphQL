@@ -14,6 +14,7 @@ import { AuthContext } from "./context/authContext";
 import PrivateRoute from "./components/PrivateRoute";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import Profile from "./pages/Auth/Profile";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 import Post from "./pages/Post/Post";
 
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
           exact
           component={CompleteRegistration}
         />
+        <Route path="/password/forgot" exact component={ForgotPassword} />
         <PrivateRoute path="/password/update" exact component={ResetPassword} />
         <PrivateRoute path="/profile" exact component={Profile} />
         <PrivateRoute path="/post/create" exact component={Post} />

@@ -39,7 +39,7 @@ const Login = () => {
 
       // send user info to our server either to update/create
       userCreate();
-      history.push("/");
+      history.push("/profile");
     });
   };
 
@@ -60,7 +60,7 @@ const Login = () => {
 
           // send user info to our server either to update/create
           userCreate();
-          history.push("/");
+          history.push("/profile");
         });
     } catch (error) {
       console.error("Login Error", error);
@@ -83,6 +83,9 @@ const Login = () => {
         showPasswordInput={true}
         handleSubmit={handleSubmit}
       />
+      <Link className="text-danger float-right" to="/password/forgot">
+        Forgot Password
+      </Link>
     </div>
   );
 };

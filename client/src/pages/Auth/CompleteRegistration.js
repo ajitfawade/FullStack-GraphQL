@@ -67,7 +67,7 @@ const CompleteRegistration = () => {
 
         userCreate();
 
-        history.push("/");
+        history.push("/profile");
       }
       setLoading(false);
     } catch (error) {
