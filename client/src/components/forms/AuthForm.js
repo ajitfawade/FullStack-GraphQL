@@ -2,26 +2,29 @@ import React from "react";
 
 const AuthForm = ({
   handleSubmit,
-  setEmail,
+  setEmail = (f) => f,
   setPassword,
-  email,
+  email = "",
   password = "",
   loading,
   showPasswordInput = false,
+  hideEmailInput = false,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Email Address</label>
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          value={email}
-          disabled={loading}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </div>
+      {!hideEmailInput && (
+        <div className="form-group">
+          <label>Email Address</label>
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Enter email"
+            value={email}
+            disabled={loading}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </div>
+      )}
       {showPasswordInput && (
         <div className="form-group">
           <label>Password</label>
@@ -37,7 +40,7 @@ const AuthForm = ({
       )}
       <button
         className="btn btn-raised btn-primary"
-        disabled={!email || loading}
+        disabled={loading}
         type="submit"
       >
         Submit
