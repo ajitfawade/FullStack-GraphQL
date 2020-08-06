@@ -10,3 +10,5 @@ open one more terminal
 ```cd client```    
 ```npm install```    
 ```npm start```    
+
+[![HitCount](http://hits.dwyl.com/ajitfawade/FullStack-GraphQL.svg)](http://hits.dwyl.com/ajitfawade/FullStack-GraphQL)
