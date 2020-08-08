@@ -9,15 +9,8 @@ import { useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
 import AuthForm from "../../components/forms/AuthForm";
+import { USER_CREATE } from '../../graphql/mutations'
 
-const USER_CREATE = gql`
-  mutation userCreate {
-    userCreate {
-      username
-      email
-    }
-  }
-`;
 
 const CompleteRegistration = () => {
   const { dispatch } = useContext(AuthContext);

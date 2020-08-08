@@ -7,15 +7,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { auth, googleAuthProvider } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
 import AuthForm from "../../components/forms/AuthForm";
-
-const USER_CREATE = gql`
-  mutation userCreate {
-    userCreate {
-      username
-      email
-    }
-  }
-`;
+import { USER_CREATE } from "../../graphql/mutations";
 
 const Login = () => {
   const [email, setEmail] = useState("");

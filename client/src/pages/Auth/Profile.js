@@ -1,25 +1,9 @@
 import React, { useState, useMemo, useContext } from "react";
 import { toast } from "react-toastify";
-import { gql } from "apollo-boost";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-
-const PROFILE = gql`
-  query {
-    profile {
-      _id
-      name
-      about
-      username
-      email
-      images {
-        url
-        public_id
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
+import omitDeep from "omit-deep";
+import { USER_UPDATE } from "../../graphql/mutations";
+import { PROFILE } from "../../graphql/queries";
 
 const Profile = () => {
   const [values, setValues] = useState({
@@ -29,27 +13,46 @@ const Profile = () => {
     about: "",
     images: [],
   });
-  const { name, username, email, about, images } = values;
+
   const [loading, setLoading] = useState(false);
   const { data } = useQuery(PROFILE);
+
   useMemo(() => {
     if (data) {
-      console.log("PROFILE:", data.profile);
       setValues({
         username: data.profile.username,
         name: data.profile.name,
         email: data.profile.email,
         about: data.profile.about,
-        images: data.profile.images,
+        images: omitDeep(data.profile.images, ["__typename"]),
       });
     }
   }, [data]);
 
-  const handleSubmit = () => {};
+  // mutation
+  const [userUpdate] = useMutation(USER_UPDATE, {
+    update: ({ data }) => {
+      console.log("USER UPDATE MUTATION IN PROFILE", data);
+      toast.success("Profile Updated");
+    },
+  });
+
+  const { name, username, email, about, images } = values;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("VALUES:", values);
+    setLoading(true);
+    userUpdate({ variables: { input: values } });
+    setLoading(false);
+  };
 
   const handleImageChange = () => {};
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    e.preventDefault();
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const profileUpdateForm = () => (
     <form onSubmit={handleSubmit}>
