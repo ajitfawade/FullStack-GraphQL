@@ -2,10 +2,13 @@ require("dotenv").config();
 const path = require("path");
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const cloudinary = require("cloudinary");
 const { ApolloServer } = require("apollo-server-express");
 const { mergeTypeDefs, mergeResolvers } = require("@graphql-tools/merge");
 const { loadFilesSync } = require("@graphql-tools/load-files");
-const { authCheck } = require("./helpers/auth");
+const { authCheck, authCheckMiddleware } = require("./helpers/auth");
 
 const http = require("http");
 
@@ -29,6 +32,9 @@ const db = async () => {
 
 // execute database connection
 db();
+
+app.use(cors());
+app.use(bodyParser.json({ limit: "5mb" }));
 
 // typedefs
 const typeDefs = mergeTypeDefs(
@@ -60,6 +66,39 @@ const httpServer = http.createServer(app);
 // rest endpoint
 app.get("/rest", authCheck, (req, res) => {
   res.json({ data: "you hit rest endpoint" });
+});
+
+// cloudinary config
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+app.post("/upload-images", (req, res) => {
+  cloudinary.uploader.upload(
+    req.body.image,
+    (result) => {
+      res.send({
+        url: result.url,
+        public_id: result.public_id,
+      });
+    },
+    {
+      public_id: `${Date.now()}`, //public name
+      resourse_type: "auto", // JPEG, PNG
+    }
+  );
+});
+
+app.post("/removeimage", authCheckMiddleware, (req, res) => {
+  let image_id = req.body.public_id;
+
+  cloudinary.uploader.destroy(image_id, (error, result) => {
+    if (error) return res.json({ success: false, error });
+    res.send("ok");
+  });
 });
 
 // port
