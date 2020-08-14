@@ -133,16 +133,6 @@ const Profile = () => {
         />
       </div>
       <div className="form-group">
-        <label>Image</label>
-        <input
-          className="form-control"
-          accept="image/*"
-          placeholder="Image"
-          type="file"
-          onChange={fileResizeAndUpload}
-        />
-      </div>
-      <div className="form-group">
         <label>About</label>
         <textarea
           className="form-control"
@@ -162,7 +152,39 @@ const Profile = () => {
       </button>
     </form>
   );
-  return <div className="container">{profileUpdateForm()}</div>;
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-3">
+          <div className="form-group">
+            <label className="btn btn-primary">
+              Upload Image
+              <input
+                className="form-control"
+                hidden
+                accept="image/*"
+                placeholder="Image"
+                type="file"
+                onChange={fileResizeAndUpload}
+              />
+            </label>
+          </div>
+        </div>
+        <div className="col-md-9">
+          {images.map((image) => (
+            <img
+              key={image.public_id}
+              src={image.url}
+              alt={image.public_id}
+              style={{ height: "100px" }}
+              className="float-right"
+            />
+          ))}
+        </div>
+      </div>
+      {profileUpdateForm()}
+    </div>
+  );
 };
 
 export default Profile;
