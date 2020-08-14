@@ -1,11 +1,15 @@
 import React, { useState, useMemo, useContext } from "react";
+import axios from "axios";
+import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import omitDeep from "omit-deep";
 import { USER_UPDATE } from "../../graphql/mutations";
 import { PROFILE } from "../../graphql/queries";
+import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
+  const { state } = useContext(AuthContext);
   const [values, setValues] = useState({
     username: "",
     name: "",
@@ -47,7 +51,42 @@ const Profile = () => {
     setLoading(false);
   };
 
-  const handleImageChange = () => {};
+  const fileResizeAndUpload = (event) => {
+    let fileInput = false;
+    if (event.target.files[0]) {
+      fileInput = true;
+    }
+    if (fileInput) {
+      Resizer.imageFileResizer(
+        event.target.files[0],
+        300,
+        300,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          axios
+            .post(
+              `${process.env.REACT_APP_REST_ENDPOINT}/upload-images`,
+              {
+                image: uri,
+              },
+              { headers: { authtoken: state.user.token } }
+            )
+            .then((response) => {
+              setLoading(false);
+              console.log("CLOUDINARY UPLOAD RESPONSE:", response);
+              setValues({ ...values, images: [...images, response.data] });
+            })
+            .catch((error) => {
+              setLoading(false);
+              console.error("CLOUDINARY UPLOAD FAILED");
+            });
+        },
+        "base64"
+      );
+    }
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -100,7 +139,7 @@ const Profile = () => {
           accept="image/*"
           placeholder="Image"
           type="file"
-          onChange={handleImageChange}
+          onChange={fileResizeAndUpload}
         />
       </div>
       <div className="form-group">
