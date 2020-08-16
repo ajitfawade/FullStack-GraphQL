@@ -88,6 +88,29 @@ const Profile = () => {
     }
   };
 
+  const handleImageRemove = (imageId) => {
+    setLoading(true);
+    axios
+      .post(
+        `${process.env.REACT_APP_REST_ENDPOINT}/removeimage`,
+        {
+          public_id: imageId,
+        },
+        { headers: { authtoken: state.user.token } }
+      )
+      .then((response) => {
+        setLoading(false);
+        let filteredImages = images.filter(
+          (item) => item.public_id !== imageId
+        );
+        setValues({ ...values, images: filteredImages });
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(error);
+      });
+  };
+
   const handleChange = (e) => {
     e.preventDefault();
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -178,6 +201,7 @@ const Profile = () => {
               alt={image.public_id}
               style={{ height: "100px" }}
               className="float-right"
+              onClick={() => handleImageRemove(image.public_id)}
             />
           ))}
         </div>
