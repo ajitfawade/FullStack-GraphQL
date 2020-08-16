@@ -3,6 +3,7 @@ import axios from "axios";
 import Resizer from "react-image-file-resizer";
 
 import { AuthContext } from "../context/authContext";
+import Image from "./Image";
 
 const FileUpload = ({ setLoading, setValues, values, loading }) => {
   const { state } = useContext(AuthContext);
@@ -87,13 +88,10 @@ const FileUpload = ({ setLoading, setValues, values, loading }) => {
       </div>
       <div className="col-md-9">
         {values.images.map((image) => (
-          <img
+          <Image
             key={image.public_id}
-            src={image.url}
-            alt={image.public_id}
-            style={{ height: "100px" }}
-            className="float-right"
-            onClick={() => handleImageRemove(image.public_id)}
+            image={image}
+            handleImageRemove={handleImageRemove}
           />
         ))}
       </div>
