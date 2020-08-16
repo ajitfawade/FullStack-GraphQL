@@ -7,6 +7,7 @@ import omitDeep from "omit-deep";
 import { USER_UPDATE } from "../../graphql/mutations";
 import { PROFILE } from "../../graphql/queries";
 import { AuthContext } from "../../context/authContext";
+import UserProfile from "../../components/forms/UserProfile";
 
 const Profile = () => {
   const { state } = useContext(AuthContext);
@@ -52,6 +53,7 @@ const Profile = () => {
   };
 
   const fileResizeAndUpload = (event) => {
+    setLoading(true);
     let fileInput = false;
     if (event.target.files[0]) {
       fileInput = true;
@@ -116,68 +118,16 @@ const Profile = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const profileUpdateForm = () => (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Username</label>
-        <input
-          className="form-control"
-          placeholder="Username"
-          disabled={loading}
-          type="text"
-          name="username"
-          value={username}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>Name</label>
-        <input
-          className="form-control"
-          placeholder="Name"
-          disabled={loading}
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>Email</label>
-        <input
-          className="form-control"
-          placeholder="Email"
-          disabled={loading}
-          type="email"
-          name="email"
-          disabled
-          value={email}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>About</label>
-        <textarea
-          className="form-control"
-          placeholder="About"
-          disabled={loading}
-          name="about"
-          value={about}
-          onChange={handleChange}
-        />
-      </div>
-      <button
-        type="submit"
-        disabled={!email || loading}
-        className="btn btn-primary"
-      >
-        Submit
-      </button>
-    </form>
-  );
   return (
     <div className="container">
       <div className="row">
+        <div className="col-md-12 pb-3">
+          {loading ? (
+            <h4 className="text-danger">Loading</h4>
+          ) : (
+            <h4>Profile</h4>
+          )}
+        </div>
         <div className="col-md-3">
           <div className="form-group">
             <label className="btn btn-primary">
@@ -206,7 +156,12 @@ const Profile = () => {
           ))}
         </div>
       </div>
-      {profileUpdateForm()}
+      <UserProfile
+        {...values}
+        loading={loading}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };
