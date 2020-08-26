@@ -12,6 +12,7 @@ import Register from "./pages/Auth/Register";
 import CompleteRegistration from "./pages/Auth/CompleteRegistration";
 import { AuthContext } from "./context/authContext";
 import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute.js";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import Profile from "./pages/Auth/Profile";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
@@ -37,9 +38,9 @@ const App = () => {
       <Nav />
       <ToastContainer />
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/register" exact component={Register} />
-        <Route path="/login" exact component={Login} />
+        <PrivateRoute path="/" exact component={Home} />
+        <PublicRoute path="/register" exact component={Register} />
+        <PublicRoute path="/login" exact component={Login} />
         <Route
           path="/complete-registration"
           exact

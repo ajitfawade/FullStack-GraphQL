@@ -3,7 +3,7 @@ import { Link, Route } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import LoadingToRedirect from "./LoadingToRedirect";
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ ...rest }) => {
   const [user, setUser] = useState(false);
   const { state } = useContext(AuthContext);
 
