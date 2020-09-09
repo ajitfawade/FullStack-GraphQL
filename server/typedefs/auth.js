@@ -47,6 +47,7 @@ module.exports = gql`
 
   type Query {
     profile: User!
+    publicProfile(username: String!): User!
   }
 
   type Mutation {
