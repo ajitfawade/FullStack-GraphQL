@@ -6,6 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
+import Users from "./pages/Users";
 import Nav from "./components/Nav";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -39,6 +40,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/users" exact component={Users} />
         <PublicRoute path="/register" exact component={Register} />
         <PublicRoute path="/login" exact component={Login} />
         <Route

@@ -6,7 +6,6 @@ const { authCheck } = require("../helpers/auth");
 const totalPosts = () => posts.length;
 
 const allPosts = async (parents, args, { req }) => {
-  await authCheck(req);
   return posts;
 };
 
