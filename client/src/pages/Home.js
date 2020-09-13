@@ -13,13 +13,13 @@ const Home = () => {
       <div className="row p-5">
         {data &&
           data.allPosts.map((post) => (
-            <div className="col-md-4" key={post.id}>
+            <div className="col-md-4" key={post._id}>
               <div className="card">
                 <div className="card-body">
                   <div className="card-title">
-                    <h4>{post.title}</h4>
+                    <h4>@{post.postedBy.username}</h4>
                   </div>
-                  <div className="card-text">{post.description}</div>
+                  <p className="card-text">{post.content}</p>
                 </div>
               </div>
             </div>
