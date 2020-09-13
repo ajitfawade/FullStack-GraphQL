@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { ObjectID } = mongoose.mongo;
+const { ObjectId } = mongoose.mongo;
 
 const postSchema = new mongoose.Schema(
   {
@@ -19,7 +19,7 @@ const postSchema = new mongoose.Schema(
       },
     },
     postedBy: {
-      type: ObjectID,
+      type: ObjectId,
       ref: "User",
     },
   },

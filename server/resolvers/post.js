@@ -1,35 +1,36 @@
 const { gql } = require("apollo-server-express");
 const { posts } = require("../temp");
+const User = require("../models/User");
+const Post = require("../models/Post");
 const { authCheck } = require("../helpers/auth");
 
 // resolvers
-const totalPosts = () => posts.length;
-
-const allPosts = async (parents, args, { req }) => {
-  return posts;
-};
 
 // Mutation
-const newPost = (parent, args) => {
-  // create a new post object
-
-  const post = {
-    id: posts.length + 1,
-    title: args.input.title,
-    description: args.input.description,
-  };
-
-  // push to posts array
-  posts.push(post);
-  return post;
+const postCreate = async (parent, args, { req }) => {
+  const currentUser = await authCheck(req);
+  // validation
+  if (!args.input.content.trim()) {
+    throw new Error("Content is required");
+  }
+  const user = await User.findOne({ email: currentUser.email });
+  const newPost = await new Post({
+    ...args.input,
+    postedBy: user._id,
+  })
+    .save()
+    .then((post) => {
+      post.populate("postedBy", "_id username").execPopulate();
+      return newPost;
+    })
+    .catch((error) => {
+      console.error("Error while creating post", error);
+    });
 };
 
 module.exports = {
-  Query: {
-    totalPosts,
-    allPosts,
-  },
+  Query: {},
   Mutation: {
-    newPost,
+    postCreate,
   },
 };
