@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 
 import { auth, googleAuthProvider } from "../../firebase";

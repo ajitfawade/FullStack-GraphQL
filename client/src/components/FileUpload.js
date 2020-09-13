@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext, Fragment } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 

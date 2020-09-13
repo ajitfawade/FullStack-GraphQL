@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory, Route } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
-import LoadingToRedirect from "./LoadingToRedirect";
 
 const PublicRoute = ({ ...rest }) => {
   const { state } = useContext(AuthContext);

@@ -43,7 +43,6 @@ const UserProfile = ({
           disabled={loading}
           type="email"
           name="email"
-          disabled
           value={email}
           onChange={handleChange}
         />

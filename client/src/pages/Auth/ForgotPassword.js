@@ -11,10 +11,6 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
 
-    const config = {
-      url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT,
-      handleCodeInApp: true,
-    };
     await auth
       .sendPasswordResetEmail(email)
       .then((resp) => {

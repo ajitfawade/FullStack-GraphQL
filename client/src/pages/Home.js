@@ -1,24 +1,10 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import ApolloClient from "apollo-boost";
-import { gql } from "apollo-boost";
+import React from "react";
 import { useQuery, useLazyQuery } from "@apollo/react-hooks";
-import { AuthContext } from "../context/authContext";
 import { GET_ALL_POSTS } from "../graphql/queries";
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
-});
-
 const Home = () => {
-  //   const [posts, setPosts] = useState([]);
-  const { data, loading, error } = useQuery(GET_ALL_POSTS);
-  const [fetchPosts, { data: posts }] = useLazyQuery(GET_ALL_POSTS);
-
-  // use contexts
-  const { state, dispatch } = useContext(AuthContext);
-
-  let history = useHistory();
+  const { data, loading } = useQuery(GET_ALL_POSTS);
+  const [fetchPosts] = useLazyQuery(GET_ALL_POSTS);
 
   if (loading) return <p className="p-5">Loading...</p>;
 

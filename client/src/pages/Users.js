@@ -4,7 +4,7 @@ import { GET_ALL_USERS } from "../graphql/queries";
 import UserCard from "../components/UserCard";
 
 const Users = () => {
-  const { data, loading, error } = useQuery(GET_ALL_USERS);
+  const { data, loading } = useQuery(GET_ALL_USERS);
 
   if (loading) return <p className="p-5">Loading...</p>;
 

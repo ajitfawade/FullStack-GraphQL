@@ -1,15 +1,13 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import omitDeep from "omit-deep";
 import { USER_UPDATE } from "../../graphql/mutations";
 import { PROFILE } from "../../graphql/queries";
-import { AuthContext } from "../../context/authContext";
 import UserProfile from "../../components/forms/UserProfile";
 import FileUpload from "../../components/FileUpload";
 
 const Profile = () => {
-  const { state } = useContext(AuthContext);
   const [values, setValues] = useState({
     username: "",
     name: "",
@@ -40,8 +38,6 @@ const Profile = () => {
       toast.success("Profile Updated");
     },
   });
-
-  const { name, username, email, about, images } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
