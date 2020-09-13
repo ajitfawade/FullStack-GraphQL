@@ -21,15 +21,22 @@ const postCreate = async (parent, args, { req }) => {
     .save()
     .then((post) => {
       post.populate("postedBy", "_id username").execPopulate();
-      return newPost;
+      return post;
     })
     .catch((error) => {
       console.error("Error while creating post", error);
     });
+  return newPost;
+};
+
+const allPosts = async (parent, args, { req }) => {
+  return await Post.find().exec();
 };
 
 module.exports = {
-  Query: {},
+  Query: {
+    allPosts,
+  },
   Mutation: {
     postCreate,
   },
