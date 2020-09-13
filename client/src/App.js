@@ -18,6 +18,7 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 import Profile from "./pages/Auth/Profile";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import Post from "./pages/Post/Post";
+import SingleUser from "./pages/SingleUser";
 
 const App = () => {
   const { state } = useContext(AuthContext);
@@ -52,6 +53,7 @@ const App = () => {
         <PrivateRoute path="/password/update" exact component={ResetPassword} />
         <PrivateRoute path="/profile" exact component={Profile} />
         <PrivateRoute path="/post/create" exact component={Post} />
+        <Route path="/user/:username" component={SingleUser} />
       </Switch>
     </ApolloProvider>
   );

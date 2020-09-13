@@ -1,7 +1,7 @@
 import React from "react";
-import ApolloClient from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_ALL_USERS } from "../graphql/queries";
+import UserCard from "../components/UserCard";
 
 const Users = () => {
   const { data, loading, error } = useQuery(GET_ALL_USERS);
@@ -14,14 +14,7 @@ const Users = () => {
         {data &&
           data.allUsers.map((user) => (
             <div className="col-md-4" key={user._id}>
-              <div className="card">
-                <div className="card-body">
-                  <div className="card-title">
-                    <h4>{user.username}</h4>
-                  </div>
-                  <div className="card-text">{user.about}</div>
-                </div>
-              </div>
+              <UserCard user={user} />
             </div>
           ))}
       </div>
