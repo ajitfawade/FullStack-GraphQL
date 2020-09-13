@@ -11,4 +11,3 @@ open one more terminal
 ```npm install```    
 ```npm start```    
 
-[![HitCount](http://hits.dwyl.com/ajitfawade/FullStack-GraphQL.svg)](http://hits.dwyl.com/ajitfawade/FullStack-GraphQL)
