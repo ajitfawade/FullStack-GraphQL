@@ -33,9 +33,19 @@ const allPosts = async (parent, args, { req }) => {
   return await Post.find().exec();
 };
 
+const postsByUser = async (parent, args, { req }) => {
+  const currentUser = await authCheck(req);
+  const user = await User.findOne({ email: currentUser.email }).exec();
+  return await Post.find({ postedBy: user._id })
+    .populate("postedBy", "_id username")
+    .sort({ createdAt: -1 })
+    .exec();
+};
+
 module.exports = {
   Query: {
     allPosts,
+    postsByUser,
   },
   Mutation: {
     postCreate,
