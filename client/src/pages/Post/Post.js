@@ -1,14 +1,17 @@
 import React, { useState, useContext, useEffect, fragment } from "react";
-import toast from "react-toastify";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import omitDeep from "omit-deep";
 import FileUpload from "../../components/FileUpload";
+import { POST_CREATE } from "../../graphql/mutations";
 
 const initialState = {
   content: "",
-  image: { url: "https://via.placeholder.com/200x200.png?text=Post" },
-  public_id: "123",
+  image: {
+    url: "https://via.placeholder.com/200x200.png?text=Post",
+    public_id: "123",
+  },
 };
 
 const Post = () => {
@@ -17,9 +20,22 @@ const Post = () => {
 
   const { content, image, postedBy } = values;
 
-  const handleSubmit = () => {
-    //
+  // mutation
+  const [postCreate] = useMutation(POST_CREATE, {
+    // update cache
+    update: (data) => {
+      console.log(data);
+    },
+    onError: (error) => console.log(error),
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
+    await postCreate({ variables: { input: values } });
+    setValues(initialState);
+    setLoading(false);
+    toast.success("Post created successfully");
   };
 
   const handleChange = (e) => {
