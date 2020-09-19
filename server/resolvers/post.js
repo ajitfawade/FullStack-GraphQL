@@ -45,6 +45,12 @@ const postsByUser = async (parent, args, { req }) => {
     .exec();
 };
 
+const singlePost = async (parent, args) => {
+  return await Post.findById(args.postId)
+    .populate("postedBy", "username email name _id")
+    .exec();
+};
+
 const postUpdate = async (parent, args, { req }) => {
   const currentUser = await authCheck(req);
 
@@ -104,6 +110,7 @@ module.exports = {
   Query: {
     allPosts,
     postsByUser,
+    singlePost,
   },
   Mutation: {
     postCreate,
