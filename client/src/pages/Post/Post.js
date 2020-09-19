@@ -27,10 +27,22 @@ const Post = () => {
   // mutation
   const [postCreate] = useMutation(POST_CREATE, {
     // update cache
-    update: (data) => {
-      console.log(data);
+
+    update: (cache, { data: { postCreate } }) => {
+      // read Query from cache
+      const { postsByUser } = cache.readQuery({
+        query: POSTS_BY_USER,
+      });
+      // write Query to cache
+      cache.writeQuery({
+        query: POSTS_BY_USER,
+        data: {
+          postsByUser: [postCreate, ...postsByUser],
+        },
+      });
     },
-    onError: (error) => console.log(error),
+
+    onError: (error) => console.error(error.graphqQLError[0].message),
   });
 
   const handleSubmit = async (e) => {
