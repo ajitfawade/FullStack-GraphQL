@@ -5,6 +5,8 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import omitDeep from "omit-deep";
 import FileUpload from "../../components/FileUpload";
 import { POST_CREATE } from "../../graphql/mutations";
+import { POSTS_BY_USER } from "../../graphql/queries";
+import PostCard from "../../components/PostCard";
 
 const initialState = {
   content: "",
@@ -17,6 +19,8 @@ const initialState = {
 const Post = () => {
   const [values, setValues] = useState(initialState);
   const [loading, setLoading] = useState(false);
+
+  const { data: posts } = useQuery(POSTS_BY_USER);
 
   const { content, image, postedBy } = values;
 
@@ -79,7 +83,14 @@ const Post = () => {
         <div className="col">{createForm()}</div>
       </div>
       <hr />
-      {JSON.stringify(values.image)}
+      <div className="row p-5">
+        {posts &&
+          posts.postsByUser.map((post) => (
+            <div className="col-md-6 p-5" key={post._id}>
+              <PostCard post={post} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

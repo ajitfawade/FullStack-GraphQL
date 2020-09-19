@@ -27,3 +27,11 @@ export const GET_ALL_USERS = gql`
   }
   ${USER_INFO}
 `;
+export const POSTS_BY_USER = gql`
+  query {
+    postsByUser {
+      ...postData
+    }
+  }
+  ${POST_DATA}
+`;
