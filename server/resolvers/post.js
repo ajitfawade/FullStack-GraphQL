@@ -45,6 +45,61 @@ const postsByUser = async (parent, args, { req }) => {
     .exec();
 };
 
+const postUpdate = async (parent, args, { req }) => {
+  const currentUser = await authCheck(req);
+
+  // validation
+  if (!args.input.content.trim()) {
+    throw new Error("Content is required");
+  }
+
+  // get current user mongodb _id based on email
+  const user = await User.findOne({ email: currentUser.email }).exec();
+
+  // _id of post to update
+  const post = await Post.findById({ _id: args.input._id }).exec();
+
+  if (!post) throw new Error("Post not found");
+
+  // if current user id and id of the post's postedBy user id same, allow update
+
+  if (user._id.toString() !== post.postedBy._id.toString()) {
+    throw new Error("Unauthorized action");
+  }
+
+  let updatedPost = await Post.findByIdAndUpdate(
+    args.input._id,
+    {
+      ...args.input,
+    },
+    { new: true }
+  ).exec();
+
+  return updatedPost;
+};
+
+const postDelete = async (parent, args, { req }) => {
+  const currentUser = await authCheck(req);
+
+  // get current user mongodb _id based on email
+  const user = await User.findOne({ email: currentUser.email }).exec();
+
+  // _id of post to delete
+  const post = await Post.findById({ _id: args.postId }).exec();
+
+  if (!post) throw new Error("Post not found");
+
+  // if current user id and id of the post's postedBy user id same, allow update
+
+  if (user._id.toString() !== post.postedBy._id.toString()) {
+    throw new Error("Unauthorized action");
+  }
+
+  let deletedPost = await Post.findByIdAndDelete({ _id: args.postId }).exec();
+
+  return deletedPost;
+};
+
 module.exports = {
   Query: {
     allPosts,
@@ -52,5 +107,7 @@ module.exports = {
   },
   Mutation: {
     postCreate,
+    postUpdate,
+    postDelete,
   },
 };
