@@ -27,3 +27,11 @@ export const POST_CREATE = gql`
   }
   ${POST_DATA}
 `;
+
+export const POST_DELETE = gql`
+  mutation postDelete($postId: String!) {
+    postDelete(postId: $postId) {
+      _id
+    }
+  }
+`;
