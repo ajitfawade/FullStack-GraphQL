@@ -1,8 +1,6 @@
-import React, { useState, useContext, useEffect, fragment } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../context/authContext";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import omitDeep from "omit-deep";
 import FileUpload from "../../components/FileUpload";
 import { POST_CREATE, POST_DELETE } from "../../graphql/mutations";
 import { POSTS_BY_USER } from "../../graphql/queries";
@@ -22,7 +20,7 @@ const Post = () => {
 
   const { data: posts } = useQuery(POSTS_BY_USER);
 
-  const { content, image, postedBy } = values;
+  const { content } = values;
 
   // mutation
   const [postCreate] = useMutation(POST_CREATE, {

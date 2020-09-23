@@ -43,7 +43,6 @@ const FileUpload = ({
               // used for single/multiple upload
               if (singleUpload) {
                 // single upload
-                const { image } = values;
                 setValues({ ...values, image: response.data });
               } else {
                 const { images } = values;
@@ -75,7 +74,6 @@ const FileUpload = ({
         // setValues to parent component based on either it is
         // used for single/multiple upload
         if (singleUpload) {
-          const { image } = values;
           setValues({ ...values, image: { url: "", public_id: "" } });
         } else {
           const { images } = values;

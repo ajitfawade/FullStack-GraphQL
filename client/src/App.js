@@ -19,6 +19,7 @@ import Profile from "./pages/Auth/Profile";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import Post from "./pages/Post/Post";
 import PostUpdate from "./pages/Post/PostUpdate";
+import SinglePost from "./pages/Post/SinglePost";
 import SingleUser from "./pages/SingleUser";
 
 const App = () => {
@@ -54,7 +55,12 @@ const App = () => {
         <PrivateRoute path="/password/update" exact component={ResetPassword} />
         <PrivateRoute path="/profile" exact component={Profile} />
         <PrivateRoute path="/post/create" exact component={Post} />
-        <PrivateRoute path="/post/update/:postId" exact component={PostUpdate} />
+        <PrivateRoute path="/post/:postId" exact component={SinglePost} />
+        <PrivateRoute
+          path="/post/update/:postId"
+          exact
+          component={PostUpdate}
+        />
         <Route path="/user/:username" component={SingleUser} />
       </Switch>
     </ApolloProvider>

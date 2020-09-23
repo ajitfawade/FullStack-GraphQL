@@ -18,7 +18,7 @@ const PostUpdate = () => {
 
   const [loading, setLoading] = useState(false);
   const { postId } = useParams();
-  const { content, image } = values;
+  const { content } = values;
 
   useMemo(() => {
     if (singlePost) {
