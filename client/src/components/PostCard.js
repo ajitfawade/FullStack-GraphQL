@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "./Image";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const PostCard = ({
   post,
@@ -9,6 +9,7 @@ const PostCard = ({
   handleDelete = (f) => f,
 }) => {
   const { image, content, postedBy } = post;
+  const history = useHistory();
   return (
     <div className="card text-center" style={{ minHeight: "375px" }}>
       <div className="card-body">
@@ -27,7 +28,12 @@ const PostCard = ({
           </button>
         )}
         {showUpdateButton && (
-          <button className="btn m-2 btn-info">Update</button>
+          <button
+            className="btn m-2 btn-info"
+            onClick={() => history.push(`/post/update/${post._id}`)}
+          >
+            Update
+          </button>
         )}
       </div>
       <div className=""></div>
