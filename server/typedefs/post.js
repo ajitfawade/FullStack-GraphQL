@@ -24,6 +24,7 @@ module.exports = gql`
     allPosts: [Post!]!
     postsByUser: [Post!]!
     singlePost(postId: String): Post!
+    totalPosts: Int!
   }
 
   # Mutations
